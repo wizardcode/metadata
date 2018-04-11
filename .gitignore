@@ -1,0 +1,4 @@
+ExifTool/*
+venv/*
+*.pyc
+.idea/*

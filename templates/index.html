@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>文件元数据</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!--<link rel="stylesheet" href="/static/css/index.css">-->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .el-header {
+            background-color: black;
+        }
+
+        .el-table .warning-row {
+            background: oldlace;
+        }
+
+        .el-table .success-row {
+            background: #f0f9eb;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header></el-header>
+        <el-main>
+            <div style="width: 1000px; margin: 0 auto">
+                <div style="width: 400px; float: left;">
+                    <el-col :span="6">
+                        <div class="grid-content bg-purple">
+                            <el-upload class="upload-demo" drag action="/upload" name="file"
+                                       :on-success="success" :show-file-list="true">
+                                <i class="el-icon-upload"></i>
+                                <div class="el-upload__text">将文件拖到此处，或<em>手动选择文件</em></div>
+                            </el-upload>
+                        </div>
+                    </el-col>
+                    <img :src="imgsrc" style="width: 360px;">
+                </div>
+                <div style="width: 600px; float: left">
+                    <template>
+                        <el-table
+                                :data="tableData"
+                                border
+                                style="width: 100%">
+                            <el-table-column
+                                    prop="type"
+                                    label="类型"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="name"
+                                    label="项目名"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="name_cn"
+                                    label="中文名"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                                    prop="value"
+                                    label="项目值">
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+            </div>
+
+        </el-main>
+        <el-footer></el-footer>
+    </el-container>
+
+</div>
+<script>
+
+</script>
+
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/index.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            imgsrc: '/static/image/timg.jpg',
+            tableData: [{
+                type: '无',
+                name: '无',
+                name_cn: '无',
+                value: '无',
+            }]
+        },
+        methods: {
+            success: function (response, file, fileList) {
+                if (response != 0) {
+                    if (response[0] == 1) {
+                        app.imgsrc = response[1];
+                    }
+                    app.tableData = response[2]
+                }
+
+            }
+        }
+    })
+</script>
+</body>
+</html>
